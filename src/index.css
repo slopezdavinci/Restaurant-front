@@ -1,13 +1,163 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+/* ./src/index.css */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+html, body{    
+    height: 100vh;
+    width: 100vw;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+main{
+    width: 100vw;
+}
+
+/* Buttons */
+
+
+.button-style{    
+    background-color: #f97316;    
+}
+
+.button-style:hover{
+    background-color: #c35d14;
+}
+
+.button-navbar{
+    background-color: #f97316;
+    color:white;
+}
+
+.button-navbar:hover{
+    background-color: #fd720e;
+    color:white;
+}
+
+.button-navbar-out{
+    color:white;
+    font-weight: bold;
+    border-radius: 0.375rem; 
+    border: 2px solid white;
+    padding: 10px;
+}
+
+.button-navbar-out:hover{
+    color:white;
+    font-weight: bold;     
+    background-color:#fd720e;    
+}
+
+.button-cards{
+    width: 30%;
+    height: 30%;
+}
+
+.buttonCompletado{    
+    background-color: #684892;    
+}
+
+/* Backgrounds */
+
+.bgGeneral{
+    background-color: #422b70;
+}
+
+.bgTableBody{
+    background-color:#d1cce9;
+}
+
+.bgTableMesa{
+    background-color:#b9b5d1;
+}
+
+/* Cards */
+
+.bg-cards{
+    background-color: white;
+    border-top: solid #422b70;
+}
+
+
+/* Tipografias */
+
+.text-primarycolor{
+    color:#f97316;
+}
+
+.text-primarycolor:hover{
+    color:#fd720e;
+}
+
+.text-accent{
+    color: #eec833;
+}
+
+.textRed{
+    color:#c71d1d
+}
+
+.textGreen{
+    color:#33b811
+}
+
+.textOrange{
+    color:#ebb34c
+}
+
+/* Modal */
+
+.modal-fondo {
+    background-color: rgba(0, 0, 0, 0.3);
+    bottom: 0;
+    left: 0;
+    right: 0;
+    top: 0;
+    position: fixed;
+}
+
+.modal {
+    background: white;
+    border-radius: 5px;
+    color: rgb(51, 51, 51);
+    display: inline;
+    max-height: 620px;
+    max-width: 500px;
+    outline: none;
+    padding: 10px;
+}
+
+/* Otros */
+
+.space-between{
+    justify-content:space-between;
+}
+.footer{    
+    width: 100%;
+    bottom: 0;
+}
+
+.navbar{   
+    position: sticky;
+    top: 0;       
+}
+
+.inputfocus{
+    
+    border: #684892 solid 2px;
+    
+}
+
+.inputfocus:focus{
+    outline: none !important;
+    border-color: #684892;
+    box-shadow: 0 0 10px #684892;
+}
+
+/*Login */
+
+.fondo-pre-form{
+    background-color: #f7a90c;
+    border-radius: 10px;
 }
