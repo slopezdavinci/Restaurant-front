@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { userLogout } from "../../redux/actions/auth";
+import { startLogout } from "../../redux/actions/auth";
 
 export const NavBar = () => {
   const dispatch = useDispatch();
@@ -9,9 +9,10 @@ export const NavBar = () => {
   const { uname } = useSelector((state) => state.auth);
 
   const handleLogout = () => {
-    dispatch(userLogout());
+    dispatch(startLogout());
   };
 
+ 
   return (
     <>
       <nav className="w-full">

@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { uiOpenMenuMobile } from "../../redux/actions/ui";
 import Recurso1 from "../../../assets/img/logos/Recurso1.png";
-import { userLogout } from "../../redux/actions/auth";
+import { startLogout } from "../../redux/actions/auth";
 
 export const NavBar = () => {
   const dispatch = useDispatch();
@@ -18,7 +18,7 @@ export const NavBar = () => {
   const { menuMobileOpen } = useSelector((state) => state.ui);
 
   const handleLogout = () => {
-    dispatch(userLogout());
+    dispatch(startLogout());
   };
 
   return (
@@ -52,9 +52,9 @@ export const NavBar = () => {
                   aria-hidden="true"
                 >
                   <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
                     d="M4 6h16M4 12h16M4 18h16"
                   />
                 </svg>
@@ -74,9 +74,9 @@ export const NavBar = () => {
                   aria-hidden="true"
                 >
                   <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
                     d="M6 18L18 6M6 6l12 12"
                   />
                 </svg>
@@ -127,14 +127,14 @@ export const NavBar = () => {
               <span className="inline-block pr-3">Salir</span>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                class="h-5 w-5 inline-block"
+                className="h-5 w-5 inline-block"
                 viewBox="0 0 20 20"
                 fill="currentColor"
               >
                 <path
-                  fill-rule="evenodd"
+                  fillRule="evenodd"
                   d="M3 3a1 1 0 00-1 1v12a1 1 0 102 0V4a1 1 0 00-1-1zm10.293 9.293a1 1 0 001.414 1.414l3-3a1 1 0 000-1.414l-3-3a1 1 0 10-1.414 1.414L14.586 9H7a1 1 0 100 2h7.586l-1.293 1.293z"
-                  clip-rule="evenodd"
+                  clipRule="evenodd"
                 />
               </svg>
             </button>

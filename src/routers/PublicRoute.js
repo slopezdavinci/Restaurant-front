@@ -4,8 +4,8 @@ import { useSelector } from "react-redux";
 
 export const PublicRoute = ({children}) => {
 
-    const { uid, cid } = useSelector((state) => state.auth);    
+    const { uid, uIsAdmin } = useSelector((state) => state.auth);    
         
 
-  return uid || cid ? <Navigate to="/" /> : children;
+  return uid && uIsAdmin === true ? <Navigate to="/admin/" /> : children;
 };

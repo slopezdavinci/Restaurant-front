@@ -10,9 +10,19 @@ import { AuthRouter } from "./AuthRouter";
 import { PublicRoute } from "./PublicRoute";
 import { PrivateRoute } from "./PrivateRoute";
 import { UnderDevelopment } from "../app/components/Pages/error/UnderDevelopmentScreen";
+import { useDispatch } from "react-redux";
+import { reloadUser } from "../app/redux/actions/auth";
 
 
 export const AppRouter = () => {
+
+const dispatch=useDispatch();
+
+if(localStorage.getItem('token')){
+  dispatch(reloadUser(localStorage.getItem('token')));
+}
+
+
   return (
     <BrowserRouter>
       <Routes>

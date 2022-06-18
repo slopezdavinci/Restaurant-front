@@ -5,9 +5,9 @@ import { Navigate} from "react-router-dom";
 
 export const PrivateRoute = ({children}) => {
 
-    const { uid } = useSelector((state) => state.auth);    
+    const { uid, uIsAdmin } = useSelector((state) => state.auth);    
 
-  return uid ? children : <Navigate to="/" />
+  return uid && uIsAdmin === true ? children : <Navigate to="/" />
 };
 
 
