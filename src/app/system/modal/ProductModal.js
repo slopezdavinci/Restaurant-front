@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { uiCloseModal } from "../../redux/actions/ui";
 import { startUploading } from "../../redux/actions/events";
+import { useCategories } from "../../../core/hooks/useCategories";
 
 const customStyles = {
   content: {
@@ -21,7 +22,10 @@ Modal.setAppElement("#root");
 const initEvent = {
   title: "",
   price: "",
+  stock: "",
   urlImage: "",
+  description: "",
+  category: "",
 };
 
 export const ProductModal = () => {
@@ -35,7 +39,9 @@ export const ProductModal = () => {
 
   const [formValues, setFormValues] = useState(initEvent);
 
-  const { title, price, urlImage, descripcion } = formValues;
+  const {categories, isLoading}= useCategories();
+
+  const { title, price, stock, urlImage, description, category } = formValues;
 
   useEffect(() => {
     if (activeEvent) {
@@ -50,6 +56,7 @@ export const ProductModal = () => {
       ...formValues,
       [target.name]: target.value,
     });
+    console.log(formValues)
   };
 
   const closeModal = () => {
@@ -67,23 +74,11 @@ export const ProductModal = () => {
     if (activeEvent) {
       //dispatch(startEventUpdate(formValues));
     } else {
-     // dispatch(startAddNew(formValues));
+      // dispatch(startAddNew(formValues));
     }
 
     setTittleValid(true);
     closeModal();
-  };
-
-  const handlePictureUpload = () => {
-    document.querySelector("#fileSelector").click();
-  };
-
-  const handleFileChange = (e) => {
-    const file = e.target.files[0];
-
-    if (file) {
-      dispatch(startUploading(file));
-    }
   };
 
   return (
@@ -96,7 +91,10 @@ export const ProductModal = () => {
       className="modal"
       overlayClassName="modal-fondo"
     >
-      <h1> {activeEvent ? "Editar producto" : "Nuevo producto"}</h1>
+      <h1 className="h3">
+        {" "}
+        {activeEvent ? "Editar producto" : "Nuevo producto"}
+      </h1>
       <hr />
       <form className="container" onSubmit={handleSubmitForm}>
         <hr />
@@ -114,6 +112,22 @@ export const ProductModal = () => {
         </div>
 
         <div className="form-group">
+          <label>Descripcion</label>
+          <input
+            type="text"
+            className="form-control"
+            placeholder="Descripcion"
+            rows="5"
+            name="descripcion"
+            value={description}
+            onChange={handleInputChange}
+          />
+          <small id="emailHelp" className="form-text text-muted">
+            Una descripción corta
+          </small>
+        </div>
+
+        <div className="form-group">
           <label>Precio</label>
           <input
             type="text"
@@ -127,25 +141,41 @@ export const ProductModal = () => {
         </div>
 
         <div className="form-group">
-          <label>Descripcion</label>
+          <label>Stock</label>
           <input
             type="text"
             className="form-control"
-            placeholder="Descripcion"
+            placeholder="Stock"
             rows="5"
-            name="descripcion"
-            value={descripcion}
+            name="stock"
+            value={stock}
             onChange={handleInputChange}
           />
-          <small id="emailHelp" className="form-text text-muted">
-            Una descripción corta
-          </small>
+        </div>
+
+        <div class="input-group mb-3">
+          <label class="input-group-text" for="inputGroupSelect01">
+            Categoria
+          </label>
+          <select class="form-select" id="inputGroupSelect01" onChange={handleInputChange} value={category}>
+            {isLoading ? <option selected>Cargando...</option> : 
+              categories.map((category)=>(
+                <option value={category.id}>{category.name}</option>            
+              ))
+            }
+            
+          </select>
         </div>
 
         <div className="form-group">
           <label>Imagen</label>
           <br />
-          <input id="fileSelector" type="file" onChange={handleFileChange} />
+          <input
+            value={urlImage}
+            type="text"
+            placeholder="Url de la imagen"
+            onChange={handleInputChange}
+          />
           <small id="emailHelp" className="form-text text-muted">
             Información adicional
           </small>
@@ -156,7 +186,7 @@ export const ProductModal = () => {
           className="btns btns-block ml-5"
           variant="success"
           active
-          onClick={handlePictureUpload}
+          onClick={handleSubmitForm}
         >
           <i className="far fa-save"></i>
           <span> Guardar</span>
