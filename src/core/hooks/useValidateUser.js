@@ -10,8 +10,6 @@ export const useValidateUser = () => {
 
         const resp = await api.get(`/user/validateUser?email=${email}&password=${password}`);
 
-        console.log(resp.data)
-
         setIsLoading(false);
 
         return resp.data;

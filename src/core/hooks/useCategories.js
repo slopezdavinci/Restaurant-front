@@ -12,8 +12,6 @@ export const useCategories = () => {
 
         const resp = await api.get('/category/');
 
-        console.log(resp.data)
-
         setCategories(resp.data)
 
         setIsLoading(false);

@@ -84,12 +84,8 @@ export const reloadUser = (id) => {
   return async (dispatch) => {
     const users = await api.get(`/user/`);
 
-    console.log(`usuarios ${JSON.stringify(users.data)}`)
-
     const user = users.data.find((user) => user.id === parseInt(id));
-
-    console.log(`usuario encontrado ${JSON.stringify(user)}`)
-
+   
     dispatch(
       userLogin({
         uid: user.id,

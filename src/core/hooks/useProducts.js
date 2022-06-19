@@ -12,8 +12,6 @@ export const useProducts = () => {
 
         const resp = await api.get('/product/');
 
-        console.log(resp.data)
-
         setProducts(resp.data)
 
         setIsLoading(false);
