@@ -1,6 +1,6 @@
 # MiResto App
 
-This project is the frontend of a restaurant website where orders can be placed. It is made with React and consumes an API made with Spring boot.
+This project is the frontend of a restaurant website where you can order for home delivery. It is made with React and consumes an API made with Spring boot.
 
 ## Available Scripts
 
