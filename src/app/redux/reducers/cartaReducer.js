@@ -9,10 +9,15 @@ const initialState = {
 
 export const cartaReducer = (state = initialState, action) => {
   switch (action.type) {
-    case types.SetActiveOrder:
+    case types.productSetActive:
       return {
         ...state,
-        activeOrder: action.payload,
+        activeProduct: action.payload,
+      };
+    case types.categorySetActive:
+      return {
+        ...state,
+        activeCategory: action.payload,
       };
 
     case types.orderAddNew:
@@ -21,10 +26,15 @@ export const cartaReducer = (state = initialState, action) => {
         orders: [...state.orders, action.payload],
       };
 
-    case types.orderClearActiveOrder:
+    case types.productClearActive:
       return {
         ...state,
-        activeOrder: null,
+        activeProduct: null,
+      };
+      case types.categoryClearActive:
+      return {
+        ...state,
+        activeCategory: null,
       };
 
     case types.orderUpdated:
@@ -35,17 +45,6 @@ export const cartaReducer = (state = initialState, action) => {
         ),
       };
 
-    case types.eventDeleted:
-      return {
-        ...state,
-        orders: state.orders.filter((e) => e.id !== state.activeOrder.id),
-        activeEvent: null,
-      };
-    case types.orderLoaded:
-      return {
-        ...state,
-        orders: [...action.payload],
-      };
     case types.orderLogout:
       return {
         ...initialState,

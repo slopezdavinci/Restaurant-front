@@ -3,7 +3,7 @@ import Modal from "react-modal";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { uiCloseModal } from "../../redux/actions/ui";
-import { startUploading } from "../../redux/actions/events";
+import { clearActiveProduct, startAddNewProduct, startEventUpdate } from "../../redux/actions/events";
 import { useCategories } from "../../../core/hooks/useCategories";
 
 const customStyles = {
@@ -20,10 +20,10 @@ const customStyles = {
 Modal.setAppElement("#root");
 
 const initEvent = {
-  title: "",
+  name: "",
   price: "",
   stock: "",
-  urlImage: "",
+  imageUrl: "",
   description: "",
   category: "",
 };
@@ -33,7 +33,7 @@ export const ProductModal = () => {
 
   const { modalOpen } = useSelector((state) => state.ui);
 
-  const { activeEvent } = useSelector((state) => state.carta);
+  const { activeProduct } = useSelector((state) => state.carta);
 
   const [tittleValid, setTittleValid] = useState(true);
 
@@ -41,40 +41,40 @@ export const ProductModal = () => {
 
   const {categories, isLoading}= useCategories();
 
-  const { title, price, stock, urlImage, description, category } = formValues;
+  const { name, price, stock, imageUrl, description, category } = formValues;
 
   useEffect(() => {
-    if (activeEvent) {
-      setFormValues(activeEvent);
+    if (activeProduct) {
+      setFormValues(activeProduct);
     } else {
       setFormValues(initEvent);
     }
-  }, [activeEvent, setFormValues]);
+  }, [activeProduct, setFormValues]);
 
   const handleInputChange = ({ target }) => {
     setFormValues({
       ...formValues,
       [target.name]: target.value,
-    });
-    console.log(formValues)
+    });       
   };
 
   const closeModal = () => {
     dispatch(uiCloseModal());
+    dispatch(clearActiveProduct());    
     setFormValues(initEvent);
   };
 
   const handleSubmitForm = (e) => {
     e.preventDefault();
 
-    if (title.trim().length < 2) {
+    if (name.trim().length < 2) {
       return setTittleValid(false);
     }
 
-    if (activeEvent) {
-      //dispatch(startEventUpdate(formValues));
+    if (activeProduct) {
+      dispatch(startEventUpdate(formValues));
     } else {
-      // dispatch(startAddNew(formValues));
+      dispatch(startAddNewProduct(formValues, categories));
     }
 
     setTittleValid(true);
@@ -93,7 +93,7 @@ export const ProductModal = () => {
     >
       <h1 className="h3">
         {" "}
-        {activeEvent ? "Editar producto" : "Nuevo producto"}
+        {activeProduct ? "Editar producto" : "Nuevo producto"}
       </h1>
       <hr />
       <form className="container" onSubmit={handleSubmitForm}>
@@ -104,9 +104,9 @@ export const ProductModal = () => {
             type="text"
             className={`form-control ${!tittleValid && "is-invalid"}`}
             placeholder="Nombre del producto"
-            name="title"
+            name="name"
             autoComplete="off"
-            value={title}
+            value={name}
             onChange={handleInputChange}
           />
         </div>
@@ -118,7 +118,7 @@ export const ProductModal = () => {
             className="form-control"
             placeholder="Descripcion"
             rows="5"
-            name="descripcion"
+            name="description"
             value={description}
             onChange={handleInputChange}
           />
@@ -153,14 +153,14 @@ export const ProductModal = () => {
           />
         </div>
 
-        <div class="input-group mb-3">
-          <label class="input-group-text" for="inputGroupSelect01">
+        <div className="input-group mb-3">
+          <label className="input-group-text" for="inputGroupSelect01">
             Categoria
           </label>
-          <select class="form-select" id="inputGroupSelect01" onChange={handleInputChange} value={category}>
+          <select className="form-select" name="category" onChange={handleInputChange} value={category}>
             {isLoading ? <option selected>Cargando...</option> : 
               categories.map((category)=>(
-                <option value={category.id}>{category.name}</option>            
+                <option key={category.id} value={category.id}>{category.name}</option>            
               ))
             }
             
@@ -171,20 +171,17 @@ export const ProductModal = () => {
           <label>Imagen</label>
           <br />
           <input
-            value={urlImage}
+            value={imageUrl}
             type="text"
             placeholder="Url de la imagen"
+            name="imageUrl"
             onChange={handleInputChange}
-          />
-          <small id="emailHelp" className="form-text text-muted">
-            Información adicional
-          </small>
+          />          
         </div>
 
         <button
           type="submit"
-          className="btns btns-block ml-5"
-          variant="success"
+          className="btn ml-5 button-style"          
           active
           onClick={handleSubmitForm}
         >

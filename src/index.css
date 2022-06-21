@@ -16,13 +16,19 @@ main{
 
 /* Buttons */
 
+button[type=submit]{
+    background-color: #f97316; 
+    color: white;
+}
 
 .button-style{    
     background-color: #f97316;    
+    color: white;
 }
 
 .button-style:hover{
     background-color: #c35d14;
+    color: white;
 }
 
 .button-navbar{

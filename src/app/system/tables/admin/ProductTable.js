@@ -1,6 +1,8 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import { useProducts } from "../../../../core/hooks/useProducts";
+import { setActiveProduct } from "../../../redux/actions/events";
+import { uiOpenModal } from "../../../redux/actions/ui";
 
 export const ProductTable = () => {
   const dispatch = useDispatch();
@@ -11,8 +13,9 @@ export const ProductTable = () => {
     //dispatch();
   };
 
-  const handleModify = (e) => {
-    //dispatch(uiOpenModal());
+  const handleModify = (product) => {
+    dispatch(setActiveProduct(product));
+    dispatch(uiOpenModal());
   };
 
   return (
@@ -35,9 +38,7 @@ export const ProductTable = () => {
                           <th>Estado</th>
                         </tr>
                         <tr className="bgTableBody divide-y divide-gray-200">
-                          <td                            
-                            className="px-6 py-4 whitespace-nowrap"
-                          >
+                          <td className="px-6 py-4 whitespace-nowrap">
                             <div className="flex items-center">
                               <div className="ml-4">
                                 <div className="text-sm font-medium text-gray-900">
@@ -53,25 +54,28 @@ export const ProductTable = () => {
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap">
                             <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                              {data.description}
+                              {data.category.name}
                             </span>
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                            {data.price}
+                            ${data.price}
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                            {data.imageUrl}
+                            Stock: {data.stock}
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                            <img src={data.imageUrl} width={200} height={200} alt="imagen del producto" />
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                             <button
-                              className="focus:outline-none text-white text-sm py-2.5 px-5 rounded-md button-style hover:bg-purple-600 hover:shadow-lg mr-2"
-                              onClick={handleModify}
+                              className="focus:outline-none text-white text-sm py-2.5 px-5 rounded-md button-style hover:shadow-lg mr-2"
+                              onClick={()=>handleModify(data)}
                             >
                               Modificar
                             </button>
                             <button
-                              className="focus:outline-none text-white text-sm py-2.5 px-5 rounded-md button-style hover:bg-purple-600 hover:shadow-lg"
-                              onClick={handleDelete}
+                              className="focus:outline-none text-white text-sm py-2.5 px-5 rounded-md button-style hover:shadow-lg"
+                              onClick={()=>handleDelete(data)}
                             >
                               Borrar
                             </button>

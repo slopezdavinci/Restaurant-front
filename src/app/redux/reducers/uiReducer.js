@@ -13,8 +13,7 @@ export const uiReducer = (state = initialState, action) => {
     case types.uiOpenModal:
       return {
         ...state,
-        modalOpen: true,
-        Order: action.payload,
+        modalOpen: true,        
       };
     case types.uiCloseModal:
       return {
@@ -30,7 +29,7 @@ export const uiReducer = (state = initialState, action) => {
     case types.uiFinishLoading:
         return {
             ...state,
-            modalOpen: false,        
+            loading: false,         
         };
 
     case types.uiOpenMenuMobile:

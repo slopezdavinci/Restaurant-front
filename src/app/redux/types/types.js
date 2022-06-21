@@ -20,8 +20,11 @@ export const types = {
     uiViewDesktop: '[UI] View Desktop',
     uiViewMobileTablet: '[UI] View Mobile-Tablet',
 
-    setActiveOrder: '[Order] Order set active',
+    productSetActive: '[Product] Product set active',
+    productClearActive: '[Product] Product clear active',
 
+    categorySetActive: '[Category] Category set active',
+    categoryClearActive: '[Category] Category clear active'
 
 
 }

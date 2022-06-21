@@ -1,24 +1,37 @@
 import { types } from "../types/types";
 import Swal from "sweetalert2";
-import { fetchConToken } from "../../../core/helpers/fetch";
-import { fileUpload } from "../../../core/helpers/fileUpload";
+import { fetchConToken, fetchSinToken } from "../../../core/helpers/fetch";
 
-export const startAddNew = (event) => {
-  return async (dispatch, getState) => {
-    const { uid, name } = getState().auth;
+export const startAddNewProduct = (product, categories) => {
+  return async (dispatch) => {
+     
+    const category= categories.find((category) => category.id === parseInt(product.category));
 
     try {
-      const resp = await fetchConToken("events", event, "POST");
+      const resp = await fetchSinToken(
+        "product/",
+        {
+          id: 0,
+          name: product.title,
+          description: product.description,
+          price: parseInt(product.price),
+          stock: parseInt(product.stock),
+          imageUrl: product.urlImage,
+          category: category,
+          deprecated: false
+        },
+        "POST"
+      );
+
       const body = await resp.json();
 
       if (body.ok) {
-        event.id = body.evento.id;
+        /*event.id = body.evento.id;
         event.user = {
           _id: uid,
-          name: name,
-        };
-
-        dispatch(eventAddNew(event));
+          name: uname,
+        };*/
+       
       }
     } catch (error) {
       console.log(error);
@@ -26,18 +39,23 @@ export const startAddNew = (event) => {
   };
 };
 
-const eventAddNew = (event) => ({
-  type: types.eventAddNew,
-  payload: event,
+
+export const setActiveProduct = (product) => ({
+  type: types.productSetActive,
+  payload: product,
 });
 
-export const setActiveOrder = (event) => ({
-  type: types.eventSetActiveOrder,
-  payload: event,
+export const clearActiveProduct = () => ({
+  type: types.productClearActive,
 });
 
-export const eventClearActiveOrder = () => ({
-  type: types.eventClearActiveOrder,
+export const setActiveCategory = (category) => ({
+  type: types.categorySetActive,
+  payload: category,
+});
+
+export const clearActiveCategory = () => ({
+  type: types.categoryClearActive,
 });
 
 export const startEventUpdate = (event) => {
@@ -48,7 +66,7 @@ export const startEventUpdate = (event) => {
       const body = await resp.json();
 
       if (body.ok) {
-        dispatch(eventUpdated(event));
+       // dispatch(eventUpdated(event));
       } else {
         Swal.fire("Error", body.msg, "error");
       }
@@ -57,11 +75,6 @@ export const startEventUpdate = (event) => {
     }
   };
 };
-
-const eventUpdated = (event) => ({
-  type: types.eventUpdate,
-  payload: event,
-});
 
 export const startEventDelete = () => {
   return async (dispatch, getState) => {
@@ -73,7 +86,7 @@ export const startEventDelete = () => {
       const body = await resp.json();
 
       if (body.ok) {
-        dispatch(eventDeleted());
+     //   dispatch(eventDeleted());
       } else {
         Swal.fire("Error", body.msg, "error");
       }
@@ -83,54 +96,9 @@ export const startEventDelete = () => {
   };
 };
 
-const eventDeleted = () => ({
-  type: types.eventDeleted,
-});
-
-export const eventStartLoading = () => {
-  return async (dispatch) => {
-    try {
-      const resp = await fetchConToken("events");
-
-      const body = await resp.json();
-
-      const events = body.eventos;
-
-      dispatch(eventLoaded(events));
-    } catch (error) {
-      console.log(error);
-    }
-  };
-};
-
-const eventLoaded = (events) => ({
-  type: types.eventLoaded,
-  payload: events,
-});
 
 export const eventLogout = () => ({
   type: types.eventLogout,
 });
 
-export const startUploading = (file) => {
-  return async (dispatch, getState) => {
-    const { active: activeEvent } = getState().notes;
 
-    Swal.fire({
-      title: "Subiendo...",
-      text: "Por favor espere...",
-      allowOutsideClick: false,
-      onBeforeOpen: () => {
-        Swal.showLoading();
-      },
-    });
-
-    const fileUrl = await fileUpload(file);
-
-    activeEvent.url = fileUrl;
-
-    dispatch(startEventUpdate(activeEvent));
-
-    Swal.close();
-  };
-};

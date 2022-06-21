@@ -1,13 +1,11 @@
 import { types } from "../types/types";
 
-export const uiOpenModal = (Pedido) => ({
-  type: types.uiOpenModal,
-  payload: Pedido,
+export const uiOpenModal = () => ({
+  type: types.uiOpenModal,  
 });
 
 export const uiCloseModal = () => ({
-  type: types.uiCloseModal,
-  Pedido: null,
+  type: types.uiCloseModal,  
 });
 
 export const uiStartLoading = () => ({
