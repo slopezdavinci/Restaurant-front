@@ -4,34 +4,30 @@ import { fetchConToken, fetchSinToken } from "../../../core/helpers/fetch";
 
 export const startAddNewProduct = (product, categories) => {
   return async (dispatch) => {
-     
-    const category= categories.find((category) => category.id === parseInt(product.category));
+    const category = categories.find(
+      (category) => category.id === parseInt(product.category)
+    );
 
     try {
       const resp = await fetchSinToken(
         "product/",
         {
           id: 0,
-          name: product.title,
+          name: product.name,
           description: product.description,
           price: parseInt(product.price),
           stock: parseInt(product.stock),
-          imageUrl: product.urlImage,
+          imageUrl: product.imageUrl,
           category: category,
-          deprecated: false
+          deprecated: false,
         },
         "POST"
       );
 
       const body = await resp.json();
 
-      if (body.ok) {
-        /*event.id = body.evento.id;
-        event.user = {
-          _id: uid,
-          name: uname,
-        };*/
-       
+      if (!body.ok) {
+        console.log(body.message);
       }
     } catch (error) {
       console.log(error);
@@ -39,6 +35,72 @@ export const startAddNewProduct = (product, categories) => {
   };
 };
 
+export const startModifyProduct = (product, categories) => {
+  return async (dispatch) => {
+    const category = categories.find(
+      (category) => category.id === parseInt(product.category)
+    );
+
+    try {
+      const resp = await fetchSinToken(
+        "product/",
+        {
+          id: product.id,
+          name: product.name,
+          description: product.description,
+          price: parseInt(product.price),
+          stock: parseInt(product.stock),
+          imageUrl: product.imageUrl,
+          category: category,
+          deprecated: false,
+        },
+        "PUT"
+      );
+
+      const body = await resp.json();
+
+      if (!body.ok) {
+        console.log(body.message);
+      }
+      window.location.reload(false);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+export const startDeleteProduct = (product, categories) => {
+  return async (dispatch) => {
+    const category = categories.find(
+      (category) => category.id === parseInt(product.category)
+    );
+
+    try {
+      const resp = await fetchSinToken(
+        "product/",
+        {
+          id: product.id,
+          name: product.name,
+          description: product.description,
+          price: parseInt(product.price),
+          stock: parseInt(product.stock),
+          imageUrl: product.imageUrl,
+          category: category,
+          deprecated: true,
+        },
+        "PUT"
+      );
+
+      const body = await resp.json();
+
+      if (!body.ok) {
+        console.log(body.message);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
 
 export const setActiveProduct = (product) => ({
   type: types.productSetActive,
@@ -66,7 +128,7 @@ export const startEventUpdate = (event) => {
       const body = await resp.json();
 
       if (body.ok) {
-       // dispatch(eventUpdated(event));
+        // dispatch(eventUpdated(event));
       } else {
         Swal.fire("Error", body.msg, "error");
       }
@@ -86,7 +148,7 @@ export const startEventDelete = () => {
       const body = await resp.json();
 
       if (body.ok) {
-     //   dispatch(eventDeleted());
+        //   dispatch(eventDeleted());
       } else {
         Swal.fire("Error", body.msg, "error");
       }
@@ -96,9 +158,6 @@ export const startEventDelete = () => {
   };
 };
 
-
 export const eventLogout = () => ({
   type: types.eventLogout,
 });
-
-

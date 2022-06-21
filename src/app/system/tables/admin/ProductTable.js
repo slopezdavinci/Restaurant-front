@@ -1,7 +1,11 @@
 import React from "react";
 import { useDispatch } from "react-redux";
+import { useCategories } from "../../../../core/hooks/useCategories";
 import { useProducts } from "../../../../core/hooks/useProducts";
-import { setActiveProduct } from "../../../redux/actions/events";
+import {
+  setActiveProduct,
+  startDeleteProduct,
+} from "../../../redux/actions/events";
 import { uiOpenModal } from "../../../redux/actions/ui";
 
 export const ProductTable = () => {
@@ -9,8 +13,10 @@ export const ProductTable = () => {
 
   const { products, isLoading } = useProducts();
 
-  const handleDelete = () => {
-    //dispatch();
+  const { categories } = useCategories();
+
+  const handleDelete = (product) => {
+    dispatch(startDeleteProduct(product, categories));
   };
 
   const handleModify = (product) => {
@@ -32,7 +38,8 @@ export const ProductTable = () => {
                   <tbody></tbody>
                 ) : (
                   products.map((data) => {
-                    return (
+                    return data.deprecated === false ?
+                     (
                       <tbody key={data.id}>
                         <tr>
                           <th>Estado</th>
@@ -64,25 +71,31 @@ export const ProductTable = () => {
                             Stock: {data.stock}
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                            <img src={data.imageUrl} width={200} height={200} alt="imagen del producto" />
+                            <img
+                              src={data.imageUrl}
+                              width={200}
+                              height={200}
+                              alt="imagen del producto"
+                            />
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                             <button
                               className="focus:outline-none text-white text-sm py-2.5 px-5 rounded-md button-style hover:shadow-lg mr-2"
-                              onClick={()=>handleModify(data)}
+                              onClick={() => handleModify(data)}
                             >
                               Modificar
                             </button>
                             <button
                               className="focus:outline-none text-white text-sm py-2.5 px-5 rounded-md button-style hover:shadow-lg"
-                              onClick={()=>handleDelete(data)}
+                              onClick={() => handleDelete(data)}
                             >
                               Borrar
                             </button>
                           </td>
                         </tr>
                       </tbody>
-                    );
+                    )
+                    : (<tbody key={data.id} style={{display:"none"}}></tbody>)
                   })
                 )}
               </table>

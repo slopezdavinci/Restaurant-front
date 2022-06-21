@@ -3,7 +3,7 @@ import Modal from "react-modal";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { uiCloseModal } from "../../redux/actions/ui";
-import { clearActiveProduct, startAddNewProduct, startEventUpdate } from "../../redux/actions/events";
+import { clearActiveProduct, startAddNewProduct, startEventUpdate, startModifyProduct } from "../../redux/actions/events";
 import { useCategories } from "../../../core/hooks/useCategories";
 
 const customStyles = {
@@ -72,7 +72,7 @@ export const ProductModal = () => {
     }
 
     if (activeProduct) {
-      dispatch(startEventUpdate(formValues));
+      dispatch(startModifyProduct(formValues, categories));
     } else {
       dispatch(startAddNewProduct(formValues, categories));
     }
