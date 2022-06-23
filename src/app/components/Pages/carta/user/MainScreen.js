@@ -6,7 +6,7 @@ import { NewsCards } from "../../../../system/cards/admin/NewsCards";
 export const MainScreen = () => {
   return (
     <>
-      <div className="navbar">
+      <div className="navbar bg-orange-500">
         <NavBar />
         <hr />
       </div>

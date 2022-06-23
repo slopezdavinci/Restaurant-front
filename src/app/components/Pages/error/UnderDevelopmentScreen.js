@@ -3,18 +3,13 @@ import { NavBar } from "../../../system/header/UserNavBar";
 import { useDispatch, useSelector } from "react-redux";
 import {
   setViewDesktop,
-  setViewMobileTablet,
-  uiOpenModal,
+  setViewMobileTablet,  
 } from "../../../redux/actions/ui";
 import useWindowDimensions from "../../../../core/hooks/useWindowDimensions";
 
 export const UnderDevelopment = () => {
   const dispatch = useDispatch();
-
-  const handleAdd = () => {
-    dispatch(uiOpenModal());
-  };
-
+  
   const { width } = useWindowDimensions();
 
   const { viewDesktop } = useSelector((state) => state.ui);

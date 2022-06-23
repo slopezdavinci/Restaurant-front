@@ -5,32 +5,54 @@ const initialState = {
   viewDesktop: false,
   menuMobileOpen: false,
   loading: false,
-  Order: 0
+  Order: 0,
 };
 
 export const uiReducer = (state = initialState, action) => {
   switch (action.type) {
-    case types.uiOpenModal:
+    case types.uiOpenProductModal:
       return {
         ...state,
-        modalOpen: true,        
+        productModalOpen: true,
       };
-    case types.uiCloseModal:
+    case types.uiCloseProductModal:
       return {
         ...state,
-        modalOpen: false,        
+        productModalOpen: false,
+      };
+
+    case types.uiOpenCategoryModal:
+      return {
+        ...state,
+        categoryModalOpen: true,
+      };
+    case types.uiCloseCategoryModal:
+      return {
+        ...state,
+        categoryModalOpen: false,
+      };
+
+    case types.uiOpenOrderModal:
+      return {
+        ...state,
+        orderModalOpen: true,
+      };
+    case types.uiCloseOrderModal:
+      return {
+        ...state,
+        orderModalOpen: false,
       };
 
     case types.uiStartLoading:
-       return {
-          ...state,
-          loading: true,        
-        };
+      return {
+        ...state,
+        loading: true,
+      };
     case types.uiFinishLoading:
-        return {
-            ...state,
-            loading: false,         
-        };
+      return {
+        ...state,
+        loading: false,
+      };
 
     case types.uiOpenMenuMobile:
       return {

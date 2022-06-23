@@ -101,15 +101,21 @@ export const NavBar = () => {
                 {/* Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" */}
                 <Link
                   className="button-navbar px-3 py-2 rounded-md text-sm font-medium"
-                  to="/orders"
+                  to="/admin/orders"
                 >
                   Pedidos
                 </Link>
                 <Link
                   className="button-navbar px-3 py-2 rounded-md text-sm font-medium"
-                  to="/aproducts"
+                  to="/admin/aproducts"
                 >
                   Productos
+                </Link>
+                <Link
+                  className="button-navbar px-3 py-2 rounded-md text-sm font-medium"
+                  to="/admin/categories"
+                >
+                  Categorias
                 </Link>
               </div>
             </div>

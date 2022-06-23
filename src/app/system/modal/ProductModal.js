@@ -2,9 +2,14 @@ import React, { useEffect } from "react";
 import Modal from "react-modal";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { uiCloseModal } from "../../redux/actions/ui";
-import { clearActiveProduct, startAddNewProduct, startEventUpdate, startModifyProduct } from "../../redux/actions/events";
+import { uiCloseProductModal } from "../../redux/actions/ui";
+import {
+  clearActiveProduct,
+  startAddNewProduct,
+  startModifyProduct,
+} from "../../redux/actions/events";
 import { useCategories } from "../../../core/hooks/useCategories";
+import { useProducts } from "../../../core/hooks/useProducts";
 
 const customStyles = {
   content: {
@@ -26,12 +31,13 @@ const initEvent = {
   imageUrl: "",
   description: "",
   category: "",
+  deprecated: "",
 };
 
 export const ProductModal = () => {
   const dispatch = useDispatch();
 
-  const { modalOpen } = useSelector((state) => state.ui);
+  const { productModalOpen } = useSelector((state) => state.ui);
 
   const { activeProduct } = useSelector((state) => state.carta);
 
@@ -39,9 +45,12 @@ export const ProductModal = () => {
 
   const [formValues, setFormValues] = useState(initEvent);
 
-  const {categories, isLoading}= useCategories();
+  const { categories, isLoading } = useCategories();
 
-  const { name, price, stock, imageUrl, description, category } = formValues;
+  const { reloadProducts }=useProducts();
+
+  const { name, price, stock, imageUrl, description, category, deprecated } =
+    formValues;
 
   useEffect(() => {
     if (activeProduct) {
@@ -55,12 +64,12 @@ export const ProductModal = () => {
     setFormValues({
       ...formValues,
       [target.name]: target.value,
-    });       
+    });
   };
 
   const closeModal = () => {
-    dispatch(uiCloseModal());
-    dispatch(clearActiveProduct());    
+    dispatch(uiCloseProductModal());
+    dispatch(clearActiveProduct());
     setFormValues(initEvent);
   };
 
@@ -73,8 +82,10 @@ export const ProductModal = () => {
 
     if (activeProduct) {
       dispatch(startModifyProduct(formValues, categories));
+      reloadProducts();
     } else {
       dispatch(startAddNewProduct(formValues, categories));
+      reloadProducts();
     }
 
     setTittleValid(true);
@@ -83,7 +94,7 @@ export const ProductModal = () => {
 
   return (
     <Modal
-      isOpen={modalOpen}
+      isOpen={productModalOpen}
       //onAfterOpen={afterOpenModal}
       onRequestClose={closeModal}
       style={customStyles}
@@ -154,16 +165,22 @@ export const ProductModal = () => {
         </div>
 
         <div className="input-group mb-3">
-          <label className="input-group-text" for="inputGroupSelect01">
-            Categoria
-          </label>
-          <select className="form-select" name="category" onChange={handleInputChange} value={category}>
-            {isLoading ? <option selected>Cargando...</option> : 
-              categories.map((category)=>(
-                <option key={category.id} value={category.id}>{category.name}</option>            
+          <label className="input-group-text">Categoria</label>
+          <select
+            className="form-select"
+            name="category"
+            onChange={handleInputChange}            
+            defaultValue={activeProduct && activeProduct.category.id}
+          >
+            {isLoading ? (
+              <option selected>Cargando...</option>
+            ) : (
+              categories.map((category) => (
+                <option key={category.id} value={category.id}>
+                  {category.name}
+                </option>
               ))
-            }
-            
+            )}
           </select>
         </div>
 
@@ -176,13 +193,25 @@ export const ProductModal = () => {
             placeholder="Url de la imagen"
             name="imageUrl"
             onChange={handleInputChange}
-          />          
+          />
+        </div>
+
+        <div className="input-group mb-3">
+          <label className="input-group-text">Deprecado</label>
+          <select
+            className="form-select"
+            name="deprecated"
+            onChange={handleInputChange}
+            value={deprecated}
+          >
+            <option value={true}>Si</option>
+            <option value={false}>No</option>
+          </select>
         </div>
 
         <button
           type="submit"
-          className="btn ml-5 button-style"          
-          active
+          className="btn ml-5 button-style"
           onClick={handleSubmitForm}
         >
           <i className="far fa-save"></i>

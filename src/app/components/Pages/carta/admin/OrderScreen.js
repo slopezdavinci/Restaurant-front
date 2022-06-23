@@ -26,7 +26,7 @@ export const OrderScreen = () => {
 
   return (
     <div>
-      <div className="navbar">
+      <div className="navbar bg-orange-500">
         <NavBar />
         <hr />
       </div>

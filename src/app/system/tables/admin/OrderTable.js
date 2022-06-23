@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { uiOpenModal } from "../../../redux/actions/ui";
+import { uiOpenOrderModal } from "../../../redux/actions/ui";
 
 export const OrderTable = () => {
 
@@ -17,7 +17,7 @@ export const OrderTable = () => {
   };
 
   const handleDetail = (OrderId) => {
-    dispatch(uiOpenModal(OrderId));
+    dispatch(uiOpenOrderModal());
   };
 
   const handleCancel = () => {

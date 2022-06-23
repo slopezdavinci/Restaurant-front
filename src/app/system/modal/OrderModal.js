@@ -1,7 +1,7 @@
 import React from "react";
 import Modal from "react-modal";
 import { useDispatch, useSelector } from "react-redux";
-import { uiCloseModal } from "../../redux/actions/ui";
+import { uiCloseOrderModal } from "../../redux/actions/ui";
 
 const customStyles = {
   content: {
@@ -19,7 +19,7 @@ Modal.setAppElement("#root");
 export const OrderModal = () => {
   const dispatch = useDispatch();
 
-  const { modalOpen, Order } = useSelector((state) => state.ui);
+  const { orderModalOpen, Order } = useSelector((state) => state.ui);
 
   const orders = useSelector(state => state.carta.orders);
 
@@ -30,7 +30,7 @@ export const OrderModal = () => {
   )
 
   const closeModal = () => {
-    dispatch(uiCloseModal());
+    dispatch(uiCloseOrderModal());
   };
 
   const handleSubmitForm = (e) => {
@@ -40,13 +40,13 @@ export const OrderModal = () => {
 
   return (
     <Modal
-      isOpen={modalOpen}
+      isOpen={orderModalOpen}
       //onAfterOpen={afterOpenModal}
       onRequestClose={closeModal}
       style={customStyles}
       closeTimeoutMS={200}
       className={
-        modalOpen
+        orderModalOpen
           ? "modal animate__animated animate__fadeIn"
           : "modal animate__animated animate__fadeOut"
       }
@@ -60,7 +60,6 @@ export const OrderModal = () => {
         <button
           type="submit"
           className="focus:outline-none text-white text-sm py-2.5 rounded-md button-style hover:bg-purple-600 hover:shadow-lg mb-2 mt-1 button-cards"
-          active
           onClick={closeModal}
         >
           <span> Salir </span>

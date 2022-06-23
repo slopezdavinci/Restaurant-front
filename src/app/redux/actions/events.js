@@ -28,7 +28,7 @@ export const startAddNewProduct = (product, categories) => {
 
       if (!body.ok) {
         console.log(body.message);
-      }
+      }      
     } catch (error) {
       console.log(error);
     }
@@ -38,7 +38,7 @@ export const startAddNewProduct = (product, categories) => {
 export const startModifyProduct = (product, categories) => {
   return async (dispatch) => {
     const category = categories.find(
-      (category) => category.id === parseInt(product.category)
+      (category) => category.id === parseInt(product.category.id)
     );
 
     try {
@@ -52,7 +52,7 @@ export const startModifyProduct = (product, categories) => {
           stock: parseInt(product.stock),
           imageUrl: product.imageUrl,
           category: category,
-          deprecated: false,
+          deprecated: product.deprecated,
         },
         "PUT"
       );
@@ -61,32 +61,46 @@ export const startModifyProduct = (product, categories) => {
 
       if (!body.ok) {
         console.log(body.message);
-      }
-      window.location.reload(false);
+      }      
     } catch (error) {
       console.log(error);
     }
   };
 };
 
-export const startDeleteProduct = (product, categories) => {
+export const startAddNewCategory = (category) => {
   return async (dispatch) => {
-    const category = categories.find(
-      (category) => category.id === parseInt(product.category)
-    );
-
     try {
       const resp = await fetchSinToken(
-        "product/",
+        "category/",
         {
-          id: product.id,
-          name: product.name,
-          description: product.description,
-          price: parseInt(product.price),
-          stock: parseInt(product.stock),
-          imageUrl: product.imageUrl,
-          category: category,
-          deprecated: true,
+          id: 0,
+          name: category.name,
+          deprecated: false,
+        },
+        "POST"
+      );
+
+      const body = await resp.json();
+
+      if (!body.ok) {
+        console.log(body.message);
+      }      
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+export const startModifyCategory = (category) => {
+  return async (dispatch) => {
+    try {
+      const resp = await fetchSinToken(
+        "category/",
+        {
+          id: category.id,
+          name: category.name,
+          deprecated: category.deprecated,
         },
         "PUT"
       );
@@ -95,7 +109,7 @@ export const startDeleteProduct = (product, categories) => {
 
       if (!body.ok) {
         console.log(body.message);
-      }
+      }      
     } catch (error) {
       console.log(error);
     }

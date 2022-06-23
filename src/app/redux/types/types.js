@@ -8,8 +8,12 @@ export const types = {
     uiSetError: '[UI] Set Error',
     uiRemoveError: '[UI] Remove Error',
 
-    uiOpenModal: '[ui] Open modal',
-    uiCloseModal: '[ui] Close modal',
+    uiOpenProductModal: '[ui] Open product modal',
+    uiCloseProductModal: '[ui] Close product modal',
+    uiOpenCategoryModal: '[ui] Open category modal',
+    uiCloseCategoryModal: '[ui] Close category modal',
+    uiOpenOrderModal: '[ui] Open order modal',
+    uiCloseOrderModal: '[ui] Close order modal',
 
     uiOpenMenuMobile: '[ui] Open menu mobile',
     uiCloseMenuMobile: '[ui] Close menu mobile',    

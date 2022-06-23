@@ -12,6 +12,7 @@ import { PrivateRoute } from "./PrivateRoute";
 import { UnderDevelopment } from "../app/components/Pages/error/UnderDevelopmentScreen";
 import { useDispatch } from "react-redux";
 import { reloadUser } from "../app/redux/actions/auth";
+import { CategoryScreen } from "../app/components/Pages/carta/admin/CategoryScreen";
 
 
 export const AppRouter = () => {
@@ -48,8 +49,8 @@ if(localStorage.getItem('token')){
               <Routes>
                 <Route index element={<ProductScreen />} />
                 <Route path="/orders" element={<OrderScreen />} />
-                <Route path="/aproducts" element={<ProductScreen />} />
-                <Route path="/*" element={<ProductScreen />} />
+                <Route path="/categories" element={<CategoryScreen />} />
+                <Route path="/aproducts" element={<ProductScreen />} />                
               </Routes>
             </PrivateRoute>
           }
