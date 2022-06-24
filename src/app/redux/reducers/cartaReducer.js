@@ -2,7 +2,7 @@ import { types } from "../types/types";
 import testData from "../../../core/data/testData";
 
 const initialState = {
-  orders: [testData.orders][0],
+  cartProducts: [],
   activeOrder: null,
   activeEvent: null,
 };
@@ -20,10 +20,17 @@ export const cartaReducer = (state = initialState, action) => {
         activeCategory: action.payload,
       };
 
-    case types.orderAddNew:
+    case types.cartAddProduct:
       return {
         ...state,
-        orders: [...state.orders, action.payload],
+        cartProducts: [...state.cartProducts, ...action.payload],
+      };
+    case types.cartRemoveProduct:
+      return {
+        ...state,
+        cartProducts: state.cartProducts.filter((e) => {
+          return e !== action.payload;
+        }),
       };
 
     case types.productClearActive:
@@ -31,18 +38,10 @@ export const cartaReducer = (state = initialState, action) => {
         ...state,
         activeProduct: null,
       };
-      case types.categoryClearActive:
+    case types.categoryClearActive:
       return {
         ...state,
         activeCategory: null,
-      };
-
-    case types.orderUpdated:
-      return {
-        ...state,
-        orders: state.orders.map((e) =>
-          e.id === action.payload.id ? action.payload : e
-        ),
       };
 
     case types.orderLogout:

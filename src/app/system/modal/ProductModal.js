@@ -9,7 +9,7 @@ import {
   startModifyProduct,
 } from "../../redux/actions/events";
 import { useCategories } from "../../../core/hooks/useCategories";
-import { useProducts } from "../../../core/hooks/useProducts";
+
 
 const customStyles = {
   content: {
@@ -45,9 +45,7 @@ export const ProductModal = () => {
 
   const [formValues, setFormValues] = useState(initEvent);
 
-  const { categories, isLoading } = useCategories();
-
-  const { reloadProducts }=useProducts();
+  const { categories, isLoading } = useCategories();  
 
   const { name, price, stock, imageUrl, description, category, deprecated } =
     formValues;
@@ -81,11 +79,9 @@ export const ProductModal = () => {
     }
 
     if (activeProduct) {
-      dispatch(startModifyProduct(formValues, categories));
-      reloadProducts();
+      dispatch(startModifyProduct(formValues, categories));      
     } else {
-      dispatch(startAddNewProduct(formValues, categories));
-      reloadProducts();
+      dispatch(startAddNewProduct(formValues, categories));      
     }
 
     setTittleValid(true);
@@ -173,7 +169,7 @@ export const ProductModal = () => {
             defaultValue={activeProduct && activeProduct.category.id}
           >
             {isLoading ? (
-              <option selected>Cargando...</option>
+              <option>Cargando...</option>
             ) : (
               categories.map((category) => (
                 <option key={category.id} value={category.id}>

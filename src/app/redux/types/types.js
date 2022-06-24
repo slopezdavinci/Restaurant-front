@@ -28,7 +28,10 @@ export const types = {
     productClearActive: '[Product] Product clear active',
 
     categorySetActive: '[Category] Category set active',
-    categoryClearActive: '[Category] Category clear active'
+    categoryClearActive: '[Category] Category clear active',
+
+    cartAddProduct: '[Cart] Add product',
+    cartRemoveProduct: '[Cart] Remove product',
 
 
 }

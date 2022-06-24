@@ -75,8 +75,7 @@ export const userLogout = () => ({
 export const startLogout = () => {
   return (dispatch) => {
     localStorage.clear();
-    dispatch(userLogout());
-    dispatch(eventLogout());
+    dispatch(userLogout());    
   };
 };
 

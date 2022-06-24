@@ -2,18 +2,19 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import Recurso1 from "../../../assets/img/logos/Recurso1.png";
+import cart from "../../../assets/img/icons/cart.svg";
 import { startLogout } from "../../redux/actions/auth";
 
 export const NavBar = () => {
   const dispatch = useDispatch();
 
   const { uname } = useSelector((state) => state.auth);
+  const { cartProducts } = useSelector((state) => state.carta);
 
   const handleLogout = () => {
     dispatch(startLogout());
   };
 
- 
   return (
     <>
       <nav className="w-full">
@@ -72,7 +73,7 @@ export const NavBar = () => {
             </div>
             <div className="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
               <div className="flex-shrink-0 flex items-center">
-              <img
+                <img
                   className="block lg:hidden h-14 w-auto"
                   src={Recurso1}
                   alt="Emu"
@@ -111,6 +112,12 @@ export const NavBar = () => {
             </div>
             {uname ? (
               <>
+                <div className="bg-violet-800 text-white rounded-full w-7 h-7 mr-1 text-center flex justify-center items-center">
+                  <span>{cartProducts.length}</span>
+                </div>
+                <div>
+                  <img src={cart} width={30} height={30} className="mr-3" />
+                </div>
                 <div>
                   <span className="text-accent mr-3">{uname}</span>
                 </div>

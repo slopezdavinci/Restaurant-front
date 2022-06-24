@@ -27,7 +27,7 @@ export const UserRegisterScreen = () => {
     e.preventDefault();
     if (isFormValid(true)) {
       dispatch( startRegister(name, lastname, email, password));
-      navigate("/*",{ replace: true });
+      navigate("/auth/login",{ replace: true });
     }
   };
 

@@ -116,6 +116,16 @@ export const startModifyCategory = (category) => {
   };
 };
 
+export const AddingToCart=(product)=>({
+  type: types.cartAddProduct,
+  payload: product,
+})
+
+export const RemovingFromCart=(product)=>({
+  type: types.cartRemoveProduct,
+  payload: product,
+})
+
 export const setActiveProduct = (product) => ({
   type: types.productSetActive,
   payload: product,
@@ -134,44 +144,5 @@ export const clearActiveCategory = () => ({
   type: types.categoryClearActive,
 });
 
-export const startEventUpdate = (event) => {
-  return async (dispatch) => {
-    try {
-      const resp = await fetchConToken(`events/${event.id}`, event, "PUT");
 
-      const body = await resp.json();
 
-      if (body.ok) {
-        // dispatch(eventUpdated(event));
-      } else {
-        Swal.fire("Error", body.msg, "error");
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-};
-
-export const startEventDelete = () => {
-  return async (dispatch, getState) => {
-    const { id } = getState().calendar.activeEvent;
-
-    try {
-      const resp = await fetchConToken(`events/${id}`, {}, "DELETE");
-
-      const body = await resp.json();
-
-      if (body.ok) {
-        //   dispatch(eventDeleted());
-      } else {
-        Swal.fire("Error", body.msg, "error");
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-};
-
-export const eventLogout = () => ({
-  type: types.eventLogout,
-});

@@ -10,6 +10,7 @@ export const useLoggedState = ( ) => {
 
     const validateLoggedState = () => {
         setIsLogged( !!uid );
+        console.log(isLogged)
     }
 
 
@@ -17,8 +18,8 @@ export const useLoggedState = ( ) => {
 
         validateLoggedState();
 
-    }, [])
+    })
 
-    return [ isLogged ];
+    return {isLogged };
 
 }

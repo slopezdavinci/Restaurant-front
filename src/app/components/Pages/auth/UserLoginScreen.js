@@ -29,8 +29,7 @@ export const UserLoginScreen = () => {
     if (isFormValid(true)) {
       const user= await checkUser(email, password);
       user &&
-      dispatch(startLogin(user));
-      console.log(user);
+      dispatch(startLogin(user));      
       if(user.isAdmin === true){
         navigate("/admin/*", { replace: true });
       }else{
