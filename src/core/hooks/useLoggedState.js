@@ -1,25 +1,18 @@
-import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 
+export const useLoggedState = () => {
+  const [isLogged, setIsLogged] = useState(false);
 
-export const useLoggedState = ( ) => {
-    
-    const [isLogged, setIsLogged] = useState(false);
+  const { uid } = useSelector((state) => state.auth);
 
-    const {uid} = useSelector(state => state.auth);
+  const validateLoggedState = () => {
+    setIsLogged(!!uid);
+  };
 
-    const validateLoggedState = () => {
-        setIsLogged( !!uid );
-        console.log(isLogged)
-    }
+  useEffect(() => {
+    validateLoggedState();
+  });
 
-
-    useEffect(() => {
-
-        validateLoggedState();
-
-    })
-
-    return {isLogged };
-
-}
+  return { isLogged };
+};

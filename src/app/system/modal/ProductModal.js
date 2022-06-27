@@ -10,14 +10,13 @@ import {
 } from "../../redux/actions/events";
 import { useCategories } from "../../../core/hooks/useCategories";
 
-
 const customStyles = {
   content: {
     top: "50%",
     left: "50%",
     right: "auto",
     bottom: "auto",
-    marginRight: "-50%",
+    marginRight: "-50%",    
     transform: "translate(-50%, -50%)",
   },
 };
@@ -45,7 +44,7 @@ export const ProductModal = () => {
 
   const [formValues, setFormValues] = useState(initEvent);
 
-  const { categories, isLoading } = useCategories();  
+  const { categories, isLoading } = useCategories();
 
   const { name, price, stock, imageUrl, description, category, deprecated } =
     formValues;
@@ -63,6 +62,7 @@ export const ProductModal = () => {
       ...formValues,
       [target.name]: target.value,
     });
+    console.log(formValues);
   };
 
   const closeModal = () => {
@@ -79,9 +79,9 @@ export const ProductModal = () => {
     }
 
     if (activeProduct) {
-      dispatch(startModifyProduct(formValues, categories));      
+      dispatch(startModifyProduct(formValues, categories));
     } else {
-      dispatch(startAddNewProduct(formValues, categories));      
+      dispatch(startAddNewProduct(formValues, categories));
     }
 
     setTittleValid(true);
@@ -165,18 +165,15 @@ export const ProductModal = () => {
           <select
             className="form-select"
             name="category"
-            onChange={handleInputChange}            
-            defaultValue={activeProduct && activeProduct.category.id}
+            onChange={handleInputChange}
+            value={activeProduct ? activeProduct.category.id : category}
           >
-            {isLoading ? (
-              <option>Cargando...</option>
-            ) : (
-              categories.map((category) => (
-                <option key={category.id} value={category.id}>
-                  {category.name}
-                </option>
-              ))
-            )}
+            <option>Seleccione</option>
+            {!isLoading  && categories.map((category) => (
+              <option key={category.id} value={category.id}>
+                {category.name}
+              </option>
+            ))}
           </select>
         </div>
 

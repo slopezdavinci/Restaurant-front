@@ -1,10 +1,9 @@
 import React, {useEffect} from "react";
-import {NavBar} from "../../../../system/header/NavBar";
+import {NavBar} from "../../../../system/header/UserNavBar";
 import {Footer} from "../../../../system/footer/Footer";
 import {useDispatch, useSelector} from "react-redux";
 import useWindowDimensions from "../../../../../core/hooks/useWindowDimensions";
-import { setViewDesktop, setViewMobileTablet, uiOpenCategoryModal } from "../../../../redux/actions/ui";
-import { CategoryModal } from "../../../../system/modal/CategoryModal";
+import { setViewDesktop, setViewMobileTablet } from "../../../../redux/actions/ui";
 import { CartTable } from "../../../../system/tables/user/CartTable";
 
 

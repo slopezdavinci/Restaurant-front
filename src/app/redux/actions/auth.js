@@ -21,6 +21,7 @@ export const startLogin = (user) => {
 
 export const startRegister = (firstName, lastName, email, password) => {
   return async (dispatch) => {
+    try{
     const resp = await fetchSinToken(
       "user/",
       {
@@ -35,27 +36,11 @@ export const startRegister = (firstName, lastName, email, password) => {
       "POST"
     );
 
-    console.log(resp);
-
-    const body = await resp.json();
-
-    if (body.ok) {
-      localStorage.setItem("token", body.id);
-      localStorage.setItem("token-init-date", new Date().getTime());
-
-      dispatch(
-        userLogin({
-          uid: body.id,
-          displayName: body.fisrtname,
-          isAdmin: body.isAdmin,
-        })
-      );
-
-      Swal.fire("Se ha registrado con exito!", "success");
-    } else {
-      Swal.fire("Error", body.message, "error");
-      console.log(body.message);
-    }
+   
+      Swal.fire("success","Buenas noticias!", "Se ha registrado con exito!");
+  }catch(error){
+    Swal.fire("error","Error!", error);
+  }
   };
 };
 

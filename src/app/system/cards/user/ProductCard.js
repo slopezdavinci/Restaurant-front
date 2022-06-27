@@ -1,28 +1,34 @@
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Swal from "sweetalert2";
 import { useLoggedState } from "../../../../core/hooks/useLoggedState";
 import { useProducts } from "../../../../core/hooks/useProducts";
-import { AddingToCart } from "../../../redux/actions/events";
+import { AddingToCart, cartCount } from "../../../redux/actions/events";
 
 export const ProductCard = () => {
   const dispatch = useDispatch();
 
   const { products, isLoading } = useProducts();
 
-  const { isLogged } = useLoggedState();
-  
-  const addToCart = (productId) => {
+  const { counter } = useSelector((state) => state.carta);
 
-    const product= products.filter((p)=>p.id === productId);
-console.log(isLogged)
-    isLogged
-      ? dispatch(AddingToCart(product))
-      : Swal.fire({
-          icon: "error",
-          title: "Atencion!",
-          text: "Para agregar al carrito primero debe iniciar sesion",
-        });
+  const { isLogged } = useLoggedState();
+
+  const addToCart = (productId) => {
+    if (isLogged) {
+      let product = products.filter((p) => p.id === productId);
+      let newProduct= Object.assign({},...product,{cartProductId:parseInt(counter)});      
+      console.log(JSON.stringify(newProduct));
+      let newCounter= parseInt(counter)+1;
+      dispatch(cartCount(newCounter));
+      dispatch(AddingToCart(newProduct));
+    } else {
+      Swal.fire({
+        icon: "error",
+        title: "Atencion!",
+        text: "Para agregar al carrito primero debe iniciar sesion",
+      });
+    }
   };
 
   return isLoading ? (

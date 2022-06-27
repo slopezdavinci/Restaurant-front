@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-import { OrderScreen } from "../app/components/Pages/carta/admin/OrderScreen";
+
 import { ProductScreen } from "../app/components/Pages/carta/admin/ProductScreen";
 import { MainScreen } from "../app/components/Pages/carta/user/MainScreen";
 import { UProductScreen } from "../app/components/Pages/carta/user/UProductScreen";
@@ -13,6 +13,9 @@ import { UnderDevelopment } from "../app/components/Pages/error/UnderDevelopment
 import { useDispatch } from "react-redux";
 import { reloadUser } from "../app/redux/actions/auth";
 import { CategoryScreen } from "../app/components/Pages/carta/admin/CategoryScreen";
+import { CartScreen } from "../app/components/Pages/carta/user/CartScreen";
+import { PurchaseScreen } from "../app/components/Pages/carta/user/PurchaseScreen";
+import { OrderScreen } from "../app/components/Pages/carta/admin/OrderScreen";
 
 
 export const AppRouter = () => {
@@ -34,6 +37,8 @@ if(localStorage.getItem('token')){
               <Routes>
                 <Route index element={<MainScreen />} />
                 <Route path="/products" element={<UProductScreen />} />
+                <Route path="/cart" element={<CartScreen />} />
+                <Route path="/purchases" element={<PurchaseScreen />} />
                 <Route path="/auth/*" element={<AuthRouter />} />
                 <Route path="/underdevelopment" element={<UnderDevelopment />} />
                 <Route path="/*" element={<MainScreen />} />

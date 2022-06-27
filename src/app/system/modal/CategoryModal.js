@@ -23,7 +23,7 @@ const customStyles = {
 Modal.setAppElement("#root");
 
 const initEvent = {
-  name: "",  
+  name: "",
   deprecated: "",
 };
 
@@ -37,8 +37,8 @@ export const CategoryModal = () => {
   const [tittleValid, setTittleValid] = useState(true);
 
   const [formValues, setFormValues] = useState(initEvent);
- 
-  const { name , deprecated} = formValues;
+
+  const { name, deprecated } = formValues;
 
   useEffect(() => {
     if (activeCategory) {
@@ -100,22 +100,29 @@ export const CategoryModal = () => {
           <input
             type="text"
             className={`form-control ${!tittleValid && "is-invalid"}`}
-            placeholder="Nombre del producto"
+            placeholder="Nombre de la categoria"
             name="name"
             autoComplete="off"
             value={name}
             onChange={handleInputChange}
           />
         </div>
-
-        <select className="form-select" name="deprecated" onChange={handleInputChange} value={deprecated}>            
-                <option value={true}>Si</option>
-                <option value={false}>No</option> 
+        <div className="form-group">
+          <label>Deprecado: </label>
+          <select
+            className="form-select"
+            name="deprecated"
+            onChange={handleInputChange}
+            value={deprecated}
+          >
+            <option value={true}>Si</option>
+            <option value={false}>No</option>
           </select>
+        </div>
 
         <button
           type="submit"
-          className="btn ml-5 button-style"          
+          className="btn ml-5 button-style"
           onClick={handleSubmitForm}
         >
           <i className="far fa-save"></i>

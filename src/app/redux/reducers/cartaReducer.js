@@ -3,6 +3,7 @@ import testData from "../../../core/data/testData";
 
 const initialState = {
   cartProducts: [],
+  counter: 0,
   activeOrder: null,
   activeEvent: null,
 };
@@ -23,14 +24,23 @@ export const cartaReducer = (state = initialState, action) => {
     case types.cartAddProduct:
       return {
         ...state,
-        cartProducts: [...state.cartProducts, ...action.payload],
+        cartProducts: [...state.cartProducts, action.payload],        
       };
+    case types.cartProductCounter:
+        return {
+          ...state,          
+          counter: action.payload,
+        };
+    case types.cartClear:
+          return {
+            ...state,          
+            counter: 0,
+            cartProducts: []
+          };
     case types.cartRemoveProduct:
       return {
         ...state,
-        cartProducts: state.cartProducts.filter((e) => {
-          return e !== action.payload;
-        }),
+        cartProducts: state.cartProducts.filter((e)=> e.cartProductId !== action.payload),
       };
 
     case types.productClearActive:
@@ -42,6 +52,17 @@ export const cartaReducer = (state = initialState, action) => {
       return {
         ...state,
         activeCategory: null,
+      };
+
+    case types.orderSetActive:
+      return {
+        ...state,
+        activeOrder: action.payload,
+      };
+    case types.orderClearActive:
+      return {
+        ...state,
+        activeOrder: null,
       };
 
     case types.orderLogout:

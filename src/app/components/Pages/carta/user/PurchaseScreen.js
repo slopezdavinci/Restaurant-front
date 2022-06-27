@@ -1,13 +1,13 @@
 import React, {useEffect} from "react";
-import {NavBar} from "../../../../system/header/NavBar";
+import {NavBar} from "../../../../system/header/UserNavBar";
 import {Footer} from "../../../../system/footer/Footer";
 import {useDispatch, useSelector} from "react-redux";
 import useWindowDimensions from "../../../../../core/hooks/useWindowDimensions";
 import { setViewDesktop, setViewMobileTablet } from "../../../../redux/actions/ui";
-import { OrderTable } from "../../../../system/tables/admin/OrderTable";
-import { OrderModal } from "../../../../system/modal/OrderModal";
+import { CartTable } from "../../../../system/tables/user/CartTable";
+import { PurchaseTable } from "../../../../system/tables/user/PurchaseTable";
 
-export const OrderScreen = () => {
+export const PurchaseScreen = () => {
     const dispatch = useDispatch();    
 
     const {width} = useWindowDimensions();
@@ -32,18 +32,17 @@ export const OrderScreen = () => {
                 className="mx-auto mb-5"
                 style={viewDesktop ? {width: 1200} : {width: 380}}
             >
-                <h1 className="mt-5 mb-5 h1 text-primarycolor">Pedidos</h1>
+                <h1 className="mt-5 mb-5 h1 text-primarycolor">Mis pedidos</h1>
                 
             </div>
 
             <div className="mx-auto mb-5" style={{width: 1200}}>
-                <OrderTable />
+                <PurchaseTable />
             </div>
 
             <div className="mt-5 relative">
                 <Footer/>
             </div>            
-            <OrderModal />
         </div>
     );
 };

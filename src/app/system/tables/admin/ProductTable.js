@@ -1,6 +1,7 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import { useProducts } from "../../../../core/hooks/useProducts";
+import { usePurchases } from "../../../../core/hooks/usePurchases";
 import {
   setActiveProduct,  
 } from "../../../redux/actions/events";
